@@ -206,7 +206,9 @@ def erase_csv(checkpoint_name):
 
     file_name = os.path.join(full_path_name, str(checkpoint_name) + '.csv')
 
-    os.remove(file_name)
+    if os.path.exists(file_name):        
+        os.remove(file_name)
+
 
 
 def recover_loss_window(dataset_name, iteration):

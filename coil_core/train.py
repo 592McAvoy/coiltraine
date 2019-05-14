@@ -6,8 +6,12 @@ import traceback
 import torch
 import torch.optim as optim
 
+from torchvision.transforms import ToTensor, ToPILImage
+import numpy as np
 from configs import g_conf, set_type_of_process, merge_with_yaml
 from network import CoILModel, Loss, adjust_learning_rate_auto
+from network.models import ERFNet, rgb2seg
+from network.models.transform import Relabel, ToLabel, Colorize
 from input import CoILDataset, Augmenter, select_balancing_strategy
 from logger import coil_logger
 from coilutils.checkpoint_schedule import is_ready_to_save, get_latest_saved_checkpoint, \
@@ -101,6 +105,25 @@ def execute(gpu, exp_batch, exp_alias, suppress_output=True, number_of_workers=1
         model = CoILModel(g_conf.MODEL_TYPE, g_conf.MODEL_CONFIGURATION)
         model.cuda()
         optimizer = optim.Adam(model.parameters(), lr=g_conf.LEARNING_RATE)
+        
+
+        # Set ERFnet for segmentation
+        model_erf = ERFNet(20)
+        model_erf = torch.nn.DataParallel(model_erf)
+        model_erf = model_erf.cuda()        
+        
+        print("LOAD ERFNet")
+        def load_my_state_dict(model, state_dict):  #custom function to load model when not all dict elements
+            own_state = model.state_dict()
+            for name, param in state_dict.items():
+                if name not in own_state:
+                    continue
+                own_state[name].copy_(param)
+            return model
+        
+        model_erf = load_my_state_dict(model_erf, torch.load(os.path.join('trained_models/erfnet_pretrained.pth')))
+        model_erf.eval()
+        print ("ERFNet and weights LOADED successfully")
 
         if checkpoint_file is not None or g_conf.PRELOAD_MODEL_ALIAS is not None:
             model.load_state_dict(checkpoint['state_dict'])
@@ -110,6 +133,7 @@ def execute(gpu, exp_batch, exp_alias, suppress_output=True, number_of_workers=1
         else:  # We accumulate iteration time and keep the average speed
             accumulated_time = 0
             loss_window = []
+       
 
         print ("Before the loss")
 
@@ -139,8 +163,79 @@ def execute(gpu, exp_batch, exp_alias, suppress_output=True, number_of_workers=1
             controls = data['directions']
             # The output(branches) is a list of 5 branches results, each branch is with size [120,3]
             model.zero_grad()
-            branches = model(torch.squeeze(data['rgb'].cuda()),
+
+            # print("Segmentation")
+            # use ERFNet to convert RGB to Segmentation
+            rgbs = data['rgb']
+            filenames = data['rgb_name']
+
+            # # seg one by one
+            # seg_road = []
+            # seg_not_road = []
+            # i = 0
+            # for inputs in rgbs:
+            #     inputs = inputs.unsqueeze(0)
+            #     # print("inputs ",inputs.shape)
+            #     with torch.no_grad():
+            #         outputs = model_erf(inputs)
+
+            #     label = outputs[0].max(0)[1].byte().cpu().data
+
+            #     road = (label == 0)
+            #     not_road = (label != 0)
+            #     seg_road.append(road)
+            #     seg_not_road.append(not_road)   
+
+            #     # # print("label ",label.shape)
+            #     # label_color = Colorize()(label.unsqueeze(0))
+            #     # filename = filenames[i]                
+            #     # filenameSave = "./save_color/" + filename.split("CoILTrain/")[1]
+            #     # os.makedirs(os.path.dirname(filenameSave), exist_ok=True)
+                   
+            #     # label_save = ToPILImage()(label_color)           
+            #     # label_save.save(filenameSave) 
+            #     # # print (i, filenameSave)
+            #     # i += 1                 
+
+            # seg_road = torch.stack(seg_road)
+            # seg_not_road = torch.stack(seg_not_road)
+            # seg = torch.stack([seg_road,seg_not_road]).transpose(0,1).float()
+            # # print(seg.shape)
+            
+            # seg batch
+            with torch.no_grad():
+                outputs = model_erf(rgbs)
+            # print("outputs.shape ",outputs.shape)
+            labels = outputs.max(1)[1].byte().cpu().data
+            # print("labels.shape",labels.shape)
+            # print(np.unique(labels[0])) 
+
+            seg_road = (labels==0)
+            seg_not_road = (labels!=0)
+            seg = torch.stack((seg_road,seg_not_road),1).float()
+
+            # save 1st batch's segmentation results
+            if iteration == 1:
+                for i in range(120):
+                    label = seg[i,0,:,:]
+                    label_color = Colorize()(label.unsqueeze(0))               
+                    filenameSave = "./save_color/batch_road_mask/%d.png"%(i)
+                    os.makedirs(os.path.dirname(filenameSave), exist_ok=True)                   
+                    label_save = ToPILImage()(label_color)           
+                    label_save.save(filenameSave)
+
+                    label = labels[i,:,:]
+                    label_color = Colorize()(label.unsqueeze(0))               
+                    filenameSave = "./save_color/batch_road/%d.png"%(i)
+                    os.makedirs(os.path.dirname(filenameSave), exist_ok=True)                   
+                    label_save = ToPILImage()(label_color)           
+                    label_save.save(filenameSave)
+
+
+            branches = model(torch.squeeze(seg.cuda()),
                              dataset.extract_inputs(data).cuda())
+
+
             loss_function_params = {
                 'branches': branches,
                 'targets': dataset.extract_targets(data).cuda(),

@@ -1,4 +1,5 @@
 from logger import coil_logger
+import os
 import torch.nn as nn
 import torch
 import importlib
@@ -24,10 +25,15 @@ class CoILICRA(nn.Module):
         for _, sizes in g_conf.SENSORS.items():
             number_first_layer_channels += sizes[0] * g_conf.NUMBER_FRAMES_FUSION
 
+        number_first_layer_channels = 2
         # Get one item from the dict
         sensor_input_shape = next(iter(g_conf.SENSORS.values()))
         sensor_input_shape = [number_first_layer_channels, sensor_input_shape[1],
                               sensor_input_shape[2]]
+
+        # hardcode first_layer_channels to be 2 (road / not_road)
+        #
+        print("number_first_layer_channels", number_first_layer_channels)
 
         # For this case we check if the perception layer is of the type "conv"
         if 'conv' in params['perception']:
@@ -82,6 +88,7 @@ class CoILICRA(nn.Module):
                                        'end_layer': True})
 
         # Create the fc vector separatedely
+        print("targets: ",g_conf.TARGETS)
         branch_fc_vector = []
         for i in range(params['branches']['number_of_branches']):
             branch_fc_vector.append(FC(params={'neurons': [params['join']['fc']['neurons'][-1]] +
@@ -112,6 +119,7 @@ class CoILICRA(nn.Module):
 
         """ ###### APPLY THE MEASUREMENT MODULE """
         m = self.measurements(a)
+ 
         """ Join measurements and perception"""
         j = self.join(x, m)
 

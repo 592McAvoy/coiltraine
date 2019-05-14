@@ -12,6 +12,8 @@ import dlib
 
 from configs import g_conf, set_type_of_process, merge_with_yaml
 from network import CoILModel
+from network.models import ERFNet, rgb2seg
+from network.models.transform import Relabel, ToLabel, Colorize
 from input import CoILDataset, Augmenter
 from logger import coil_logger
 from coilutils.checkpoint_schedule import get_latest_evaluated_checkpoint, is_next_checkpoint_ready,\
@@ -88,6 +90,25 @@ def execute(gpu, exp_batch, exp_alias, dataset_name, suppress_output):
                                                   pin_memory=True)
 
         model = CoILModel(g_conf.MODEL_TYPE, g_conf.MODEL_CONFIGURATION)
+
+        # Set ERFnet for segmentation
+        model_erf = ERFNet(20)
+        model_erf = torch.nn.DataParallel(model_erf)
+        model_erf = model_erf.cuda()        
+        
+        print("LOAD ERFNet - validate")
+        def load_my_state_dict(model, state_dict):  #custom function to load model when not all dict elements
+            own_state = model.state_dict()
+            for name, param in state_dict.items():
+                if name not in own_state:
+                    continue
+                own_state[name].copy_(param)
+            return model
+        
+        model_erf = load_my_state_dict(model_erf, torch.load(os.path.join('trained_models/erfnet_pretrained.pth')))
+        model_erf.eval()
+        print ("ERFNet and weights LOADED successfully")
+
         # The window used to keep track of the trainings
         l1_window = []
         latest = get_latest_evaluated_checkpoint()
@@ -122,9 +143,21 @@ def execute(gpu, exp_batch, exp_alias, dataset_name, suppress_output):
 
                     # Compute the forward pass on a batch from  the validation dataset
                     controls = data['directions']
-                    output = model.forward_branch(torch.squeeze(data['rgb']).cuda(),
+
+                    # Seg batch
+                    rgbs = data['rgb']
+                    with torch.no_grad():
+                        outputs = model_erf(rgbs)
+                    labels = outputs.max(1)[1].byte().cpu().data
+
+                    seg_road = (labels==0)
+                    seg_not_road = (labels!=0)
+                    seg = torch.stack((seg_road,seg_not_road),1).float()            
+
+                    output = model.forward_branch(torch.squeeze(seg).cuda(),
                                                   dataset.extract_inputs(data).cuda(),
                                                   controls)
+
                     # It could be either waypoints or direct control
                     if 'waypoint1_angle' in g_conf.TARGETS:
                         write_waypoints_output(checkpoint_iteration, output)

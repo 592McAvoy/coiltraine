@@ -35,7 +35,6 @@ def get_speed(measurement_data):
     else:  # There is no speed key, probably speed is zero.
         return 0
 
-
 def check_available_measurements(episode):
     """ Try to automatically check the measurements
         The ones named 'steer' are probably the steer for the vehicle

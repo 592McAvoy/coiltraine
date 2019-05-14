@@ -23,7 +23,6 @@ from configs import g_conf
 from coilutils.general import sort_nicely
 
 
-
 def parse_remove_configuration(configuration):
     """
     Turns the configuration line of sliptting into a name and a set of params.
@@ -120,6 +119,7 @@ class CoILDataset(Dataset):
                 measurements[k] = v.float()
 
             measurements['rgb'] = img
+            measurements['rgb_name'] = img_path
 
             self.batch_read_number += 1
         except AttributeError:
@@ -365,7 +365,7 @@ class CoILDataset(Dataset):
             value error when the configuration set targets that didn't exist in metadata
         """
         targets_vec = []
-        for target_name in g_conf.TARGETS:
+        for target_name in g_conf.TARGETS:            
             targets_vec.append(data[target_name])
 
         return torch.cat(targets_vec, 1)

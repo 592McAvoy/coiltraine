@@ -10,7 +10,7 @@ from torchvision.transforms import ToTensor, ToPILImage
 import numpy as np
 from configs import g_conf, set_type_of_process, merge_with_yaml
 from network import CoILModel, Loss, adjust_learning_rate_auto
-from network.models import ERFNet, rgb2seg
+from network.models import ERFNet
 from network.models.transform import Relabel, ToLabel, Colorize
 from input import CoILDataset, Augmenter, select_balancing_strategy
 from logger import coil_logger

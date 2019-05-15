@@ -12,7 +12,7 @@ import dlib
 
 from configs import g_conf, set_type_of_process, merge_with_yaml
 from network import CoILModel
-from network.models import ERFNet, rgb2seg
+from network.models import ERFNet
 from network.models.transform import Relabel, ToLabel, Colorize
 from input import CoILDataset, Augmenter
 from logger import coil_logger

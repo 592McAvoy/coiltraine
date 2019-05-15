@@ -1,6 +1,7 @@
 {"Loading": {"ProcessName": "CoILTrain_coil-icra_8conv_lowdropout_single_control_balancesteer_L1_noise_all_6_None_50hours", "FullConfiguration": "CoILTraindict"}}
 {"Loading": {"Poses": [[36, 40], [39, 35]]}}
-{"Loading": {"CARLA": "/CarlaUE4/Binaries/Linux/CarlaUE4-windowed-benchmark-fps=10-world-port=52073"}}
+{"Loading": {"CARLA": "/CarlaUE4/Binaries/Linux/CarlaUE4-windowed-benchmark-fps=10-world-port=49458"}}
 {"Iterating": {"Checkpoint": 2000}}
-{"Error": {"Message": "Killed By User"}}
+{"Iterating": {"Checkpoint": 2000, "Agent": "tensor(0.2829, device='cuda:0', grad_fn=<SelectBackward>)"}}
+{"Error": {"Message": "Something Happened"}}
 {"Error": {"Message": "Something happened"}}

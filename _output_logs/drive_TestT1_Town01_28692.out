@@ -1,8 +1,0 @@
- TESTED PATHJ  _logs/sample/coil_icra/drive_TestT1_Town01_csv
-_logs/sample/coil_icra/drive_TestT1_Town01_csv/control_output_.csv
- TESTED PATHJ  _logs/sample/coil_icra/drive_TestT1_Town01_csv
- TESTED PATHJ  _logs/sample/coil_icra/drive_TestT1_Town01_csv
-Going to communicate
-number_first_layer_channels 2
-targets:  ['steer', 'throttle', 'brake']
-Checkpoint  2000

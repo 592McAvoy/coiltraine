@@ -1,0 +1,142 @@
+ TESTED PATHJ  _logs/sample/coil_icra/drive_TestT1_Town01_csv
+_logs/sample/coil_icra/drive_TestT1_Town01_csv/control_output_.csv
+ TESTED PATHJ  _logs/sample/coil_icra/drive_TestT1_Town01_csv
+ TESTED PATHJ  _logs/sample/coil_icra/drive_TestT1_Town01_csv
+Going to communicate
+number_first_layer_channels 2
+targets:  ['steer', 'throttle', 'brake']
+LOAD ERFNet - validate
+ERFNet and weights LOADED successfully
+Checkpoint  2000
+0 0 0
+<carla08.driving_benchmark.experiment.Experiment object at 0x7f03949aa390>
+0 0 0
+<carla08.driving_benchmark.experiment.Experiment object at 0x7f03949aa390>
+start index  36 end index 40
+start index  39 end index 35
+
+
+----- Printing results for training weathers (Seen in Training) -----
+
+
+Percentage of Successful Episodes
+
+ VALUES 
+  Weather:  Clear Noon
+    Task: 0  ->  0.0
+  Average Between Weathers
+    Task  0  ->  0.0
+
+Average Percentage of Distance to Goal Travelled 
+
+ VALUES 
+  Weather:  Clear Noon
+    Task: 0  ->  -6.6858832400464e-07
+  Average Between Weathers
+    Task  0  ->  -6.6858832400464e-07
+
+Average Percentage of Distance to Percentage OffRoad
+
+ VALUES 
+  Weather:  Clear Noon
+    Task: 0  ->  0.0
+  Average Between Weathers
+    Task  0  ->  0.0
+
+Average Percentage of Distance to Percentage Green Lights
+
+ VALUES 
+  Weather:  Clear Noon
+    Task: 0  ->  0.0
+  Average Between Weathers
+    Task  0  ->  0.0
+
+Avg. Kilometers driven before a collision to a PEDESTRIAN
+  Weather:  Clear Noon
+    Task  0  -> more than 5.262082110910646e-06
+  Average Between Weathers
+    Task  0  -> more than  5.262082110910646e-06
+
+Avg. Kilometers driven before a collision to a VEHICLE
+  Weather:  Clear Noon
+    Task  0  -> more than 5.262082110910646e-06
+  Average Between Weathers
+    Task  0  -> more than  5.262082110910646e-06
+
+Avg. Kilometers driven before a collision to a STATIC OBSTACLE
+  Weather:  Clear Noon
+    Task  0  -> more than 5.262082110910646e-06
+  Average Between Weathers
+    Task  0  -> more than  5.262082110910646e-06
+
+Avg. Kilometers driven before going OUTSIDE OF THE ROAD
+  Weather:  Clear Noon
+    Task  0  -> more than 5.262082110910646e-06
+  Average Between Weathers
+    Task  0  -> more than  5.262082110910646e-06
+
+Avg. Kilometers driven before invading the OPPOSITE LANE
+  Weather:  Clear Noon
+    Task  0  -> more than 5.262082110910646e-06
+  Average Between Weathers
+    Task  0  -> more than  5.262082110910646e-06
+
+
+
+
+
+----- Printing results for test weathers (Unseen in Training) -----
+
+
+Percentage of Successful Episodes
+
+ VALUES 
+  Average Between Weathers
+    Task  0  ->  0.0
+
+Average Percentage of Distance to Goal Travelled 
+
+ VALUES 
+  Average Between Weathers
+    Task  0  ->  0.0
+
+Average Percentage of Distance to Percentage OffRoad
+
+ VALUES 
+  Average Between Weathers
+    Task  0  ->  0.0
+
+Average Percentage of Distance to Percentage Green Lights
+
+ VALUES 
+  Average Between Weathers
+    Task  0  ->  0.0
+
+Avg. Kilometers driven before a collision to a PEDESTRIAN
+  Average Between Weathers
+    Task  0  -> more than  0.0
+
+Avg. Kilometers driven before a collision to a VEHICLE
+  Average Between Weathers
+    Task  0  -> more than  0.0
+
+Avg. Kilometers driven before a collision to a STATIC OBSTACLE
+  Average Between Weathers
+    Task  0  -> more than  0.0
+
+Avg. Kilometers driven before going OUTSIDE OF THE ROAD
+  Average Between Weathers
+    Task  0  -> more than  0.0
+
+Avg. Kilometers driven before invading the OPPOSITE LANE
+  Average Between Weathers
+    Task  0  -> more than  0.0
+
+
+
+ metric sum  [0.]
+ metric sum  [0.]
+ metric sum  [0.]
+{'episodes_completion': array([[-5.34870659e-08]]), 'average_speed': array([0.00025611]), 'episodes_fully_completed': array([[0.]]), 'collision_vehicles': array([[1.]]), 'driven_kilometers': array([5.26208211e-06]), 'intersection_otherlane': array([[1.]]), 'end_vehicle_collision': array([[0.]]), 'intersection_offroad': array([[1.]]), 'end_other_collision': array([[0.]]), 'collision_other': array([[1.]]), 'collision_pedestrians': array([[1.]]), 'end_pedestrian_collision': array([[0.]])}
+_logs/sample/coil_icra/drive_TestT1_Town01_csv/control_output_.csv
+['steer', 'throttle', 'rep', 'start_point', 'collision_vehicles', 'intersection_offroad', 'weather', 'intersection_otherlane', 'exp_id', 'pos_y', 'brake', 'collision_other', 'end_point', 'collision_pedestrians', 'pos_']

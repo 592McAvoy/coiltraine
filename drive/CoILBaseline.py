@@ -15,7 +15,7 @@ import torch
 from coilutils.drive_utils import checkpoint_parse_configuration_file
 from configs import g_conf, merge_with_yaml
 from network import CoILModel
-
+from network.models import ERFNet
 
 # CARLA ROOT can probably be erased
 
@@ -67,6 +67,25 @@ class CoILBaseline(AutonomousAgent):
         self._model.load_state_dict(checkpoint['state_dict'])
         self._model.cuda()
         self._model.eval()
+
+        # Set ERFnet for segmentation
+        self.model_erf = ERFNet(20)
+        self.model_erf = torch.nn.DataParallel(self.model_erf)
+        self.model_erf = self.model_erf.cuda()        
+                                        
+        print("LOAD ERFNet - drive")
+        def load_my_state_dict(model, state_dict):  #custom function to load model when not all dict elements
+            own_state = model.state_dict()
+            for name, param in state_dict.items():
+                if name not in own_state:
+                    continue
+            own_state[name].copy_(param)
+            return model
+                                                                                                                       
+        self.model_erf = load_my_state_dict(self.model_erf, torch.load(os.path.join('trained_models/erfnet_pretrained.pth')))
+        self.model_erf.eval()
+        print ("ERFNet and weights LOADED successfully")
+        
         self.latest_image = None
         self.latest_image_tensor = None
         # We add more time to the curve commands
@@ -102,10 +121,23 @@ class CoILBaseline(AutonomousAgent):
         norm_speed = input_data['can_bus'][1]['speed'] / g_conf.SPEED_FACTOR
         norm_speed = torch.cuda.FloatTensor([norm_speed]).unsqueeze(0)
         directions_tensor = torch.cuda.LongTensor([directions])
-        # Compute the forward pass processing the sensors got from CARLA.
-        model_outputs = self._model.forward_branch(self._process_sensors(input_data['rgb'][1]),
+        
+        rgbs = self._process_sensors(input_data['rgb'][1])
+        with torch.no_grad():
+            outputs = self.model_erf(rgbs)
+        labels = outputs.max(1)[1].byte().cpu().data
+
+        seg_road = (labels==0)
+        seg_not_road = (labels!=0)
+        seg = torch.stack((seg_road,seg_not_road),1).float() 
+  
+        model_outputs = self._model.forward_branch(seg,
                                                    norm_speed,
                                                    directions_tensor)
+        # Compute the forward pass processing the sensors got from CARLA.
+        #model_outputs = self._model.forward_branch(self._process_sensors(input_data['rgb'][1]),
+        #                                           norm_speed,
+        #                                           directions_tensor)
 
         steer, throttle, brake = self._process_model_outputs(model_outputs[0])
         control = carla.VehicleControl()

@@ -1,0 +1,78 @@
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) failed to read data: timed out
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) connection closed
+ERROR:root:(127.0.0.1:40837) connection closed
+INFO:coil_icra_drive_TestT1_Town01:{'Iterating': {'Checkpoint': 6000, 'Agent': "tensor(0.1058, device='cuda:0', grad_fn=<SelectBackward>)"}}
+/disk2/yuchen/yuchen/coiltraine/carla08/driving_benchmark/metrics.py:340: RuntimeWarning: invalid value encountered in true_divide
+  experiment_results_matrix[:, header.index('number_red_lights')]))).tolist()
+/home/nonews/miniconda2/envs/coiltraine/lib/python3.5/site-packages/skimage/transform/_warps.py:84: UserWarning: The default mode, 'constant', will be changed to 'reflect' in skimage 0.15.
+  warn("The default mode, 'constant', will be changed to 'reflect' in "
+INFO:coil_icra_drive_TestT1_Town01:{'Loading': {'CARLA': '/CarlaUE4/Binaries/Linux/CarlaUE4-windowed-benchmark-fps=10-world-port=57786'}}
+INFO:coil_icra_drive_TestT1_Town01:{'Iterating': {'Checkpoint': 8000}}
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) failed to read data: timed out
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+ERROR:root:(127.0.0.1:57786) connection closed
+INFO:coil_icra_drive_TestT1_Town01:{'Iterating': {'Checkpoint': 8000, 'Agent': "tensor(0.3133, device='cuda:0', grad_fn=<SelectBackward>)"}}
+/disk2/yuchen/yuchen/coiltraine/carla08/driving_benchmark/metrics.py:340: RuntimeWarning: invalid value encountered in true_divide
+  experiment_results_matrix[:, header.index('number_red_lights')]))).tolist()
+/home/nonews/miniconda2/envs/coiltraine/lib/python3.5/site-packages/skimage/transform/_warps.py:84: UserWarning: The default mode, 'constant', will be changed to 'reflect' in skimage 0.15.
+  warn("The default mode, 'constant', will be changed to 'reflect' in "
+INFO:coil_icra_drive_TestT1_Town01:{'Loading': {'CARLA': '/CarlaUE4/Binaries/Linux/CarlaUE4-windowed-benchmark-fps=10-world-port=33000'}}
+INFO:coil_icra_drive_TestT1_Town01:{'Iterating': {'Checkpoint': 10000}}
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) failed to read data: timed out
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+ERROR:root:(127.0.0.1:33000) connection closed
+INFO:coil_icra_drive_TestT1_Town01:{'Iterating': {'Checkpoint': 10000, 'Agent': "tensor(0.2901, device='cuda:0', grad_fn=<SelectBackward>)"}}
+/disk2/yuchen/yuchen/coiltraine/carla08/driving_benchmark/metrics.py:340: RuntimeWarning: invalid value encountered in true_divide
+  experiment_results_matrix[:, header.index('number_red_lights')]))).tolist()
+/home/nonews/miniconda2/envs/coiltraine/lib/python3.5/site-packages/skimage/transform/_warps.py:84: UserWarning: The default mode, 'constant', will be changed to 'reflect' in skimage 0.15.
+  warn("The default mode, 'constant', will be changed to 'reflect' in "
+INFO:coil_icra_drive_TestT1_Town01:{'Finished': {}}

@@ -1,0 +1,12 @@
+preload Name  50hours_CoILTrain
+ Loading from NPY 
+['episode_00000/CentralRGB_00000.png' 'episode_00000/LeftRGB_00000.png'
+ 'episode_00000/RightRGB_00000.png' ...
+ 'episode_00022/CentralRGB_01186.png' 'episode_00022/LeftRGB_01186.png'
+ 'episode_00022/RightRGB_01186.png']
+preload Name  50hours_CoILTrain
+Loaded dataset
+number_first_layer_channels 3
+targets:  ['steer', 'throttle', 'brake']
+LOAD ERFNet
+ERFNet and weights LOADED successfully

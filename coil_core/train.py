@@ -232,9 +232,10 @@ def execute(gpu, exp_batch, exp_alias, suppress_output=True, number_of_workers=1
                     label_save.save(filenameSave)
 
 
-            branches = model(torch.squeeze(seg.cuda()),
+            branches = model(torch.squeeze(seg).cuda(),
                              dataset.extract_inputs(data).cuda())
-
+#             branches = model(torch.squeeze(rgbs.cuda()),
+#                              dataset.extract_input(data).cuda())
 
             loss_function_params = {
                 'branches': branches,

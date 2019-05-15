@@ -157,7 +157,9 @@ def execute(gpu, exp_batch, exp_alias, dataset_name, suppress_output):
                     output = model.forward_branch(torch.squeeze(seg).cuda(),
                                                   dataset.extract_inputs(data).cuda(),
                                                   controls)
-
+                    
+#                    output = model.foward_branch(torch.squeeze(rgbs).cuda(),
+#                                                 dataset.extract_inputs(data).cuda(),controls)
                     # It could be either waypoints or direct control
                     if 'waypoint1_angle' in g_conf.TARGETS:
                         write_waypoints_output(checkpoint_iteration, output)

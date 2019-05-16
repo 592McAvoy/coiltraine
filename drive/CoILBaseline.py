@@ -131,7 +131,7 @@ class CoILBaseline(AutonomousAgent):
         seg_not_road = (labels!=0)
         seg = torch.stack((seg_road,seg_not_road),1).float() 
   
-        model_outputs = self._model.forward_branch(seg,
+        model_outputs = self._model.forward_branch(seg.cuda(),
                                                    norm_speed,
                                                    directions_tensor)
         # Compute the forward pass processing the sensors got from CARLA.
